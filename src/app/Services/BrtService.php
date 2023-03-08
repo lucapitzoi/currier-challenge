@@ -4,12 +4,10 @@ namespace App\Services;
 
 use App\Helpers\DhlHelper;
 use App\Repositories\ExampleRepository;
-use Faker\Extension\Helper;
 use Illuminate\Support\Facades\Http;
 
 class BrtService extends BaseService
 {
-
     /**
      * @var ExampleRepository
      */

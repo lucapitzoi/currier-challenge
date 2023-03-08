@@ -44,19 +44,26 @@ class ShipmentsController extends ApiController
      */
     public function index(Request $request)
     {
-        $trackingNumber = $request->query('trackingNumber');
-        $currierSlug = $request->query('currierSlug');
+        try {
 
-        switch ($currierSlug) {
-            case "dhl":
-                $track = $this->dhlService->trackShipments($trackingNumber);
-                break;
-            case "brt":
-                $track = $this->brtService->trackShipments($trackingNumber);
-                break;
+            $trackingNumber = $request->query('trackingNumber');
+            $currierSlug = $request->query('currierSlug');
+
+            switch ($currierSlug) {
+                case "dhl":
+                    $track = $this->dhlService->trackShipments($trackingNumber);
+                    break;
+                case "brt":
+                    $track = $this->brtService->trackShipments($trackingNumber);
+                    break;
+            }
+
+            return $this->sendResponse('ok', 200, $track);
+
+        } catch (\Exception $e) {
+            return $this->sendError('Internal Server Error', 500, array($e));
         }
 
-        return $this->sendResponse('ok', 200, $track);
     }
 
 
